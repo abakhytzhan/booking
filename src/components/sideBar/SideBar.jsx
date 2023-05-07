@@ -1,13 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
+import { useNavigate } from "react-router-dom";
 
 const rooms = ["203", "301", "302", "303", "304", "305", "404"];
 export default function SideBar() {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -38,7 +36,11 @@ export default function SideBar() {
       <nav aria-label="secondary mailbox folders">
         <div className="roomButtons">
           {rooms.map((room) => (
-            <button className="roomButton" key={room}>
+            <button
+              className="roomButton"
+              key={room}
+              onClick={() => navigate(`/room/${room}`)}
+            >
               {room}
             </button>
           ))}
