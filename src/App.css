@@ -55,10 +55,10 @@
   text-align: center;
 }
 
-.rooms {
+.rooms,
+.contacts {
   display: flex;
   flex-direction: row;
-  margin-top: 68px;
 }
 
 .cards {
@@ -68,6 +68,7 @@
   grid-template-columns: 400px 400px;
   grid-auto-columns: 400px;
   column-gap: 40px;
+  margin-top: 68px;
 }
 
 .sideDescription {
@@ -278,12 +279,6 @@
   margin: 0 auto;
 }
 
-.endDate {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .endDate span {
   margin-left: 20px;
 }
@@ -299,4 +294,10 @@
 
 .deleteIcon {
   cursor: pointer;
+}
+
+.contactsRightSide {
+  padding-left: 280px;
+  margin: 0 auto;
+  margin-top: 68px;
 }

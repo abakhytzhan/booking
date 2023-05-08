@@ -11,12 +11,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-// import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Rooms", "Calendar", "Contacts"];
-const settings = ["MyBookings", "Profile", "Logout"];
+const settings = ["MyBookings", "MyProfile", "Logout"];
 
 const Header = () => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -27,12 +28,24 @@ const Header = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
+    let route = event.target.id.toLowerCase();
+    if (route === "rooms") {
+      route = "";
+    }
+    navigate(`/${route}`);
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleCloseUserMenu = (event) => {
+    let route = event.target.innerHTML.toLowerCase();
+    if (route === "logout") {
+      navigate("/login");
+      setAnchorElUser(null);
+    } else {
+      navigate(`/${route}`);
+      setAnchorElUser(null);
+    }
   };
 
   return (
@@ -115,6 +128,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
+                id={page}
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -127,7 +141,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="avatar" src="" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -147,7 +161,11 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                  id={setting}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

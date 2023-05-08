@@ -68,6 +68,9 @@ const RoomBookingInfo = () => {
     const endDates = formData.getAll("end-date");
     const endHour = formData.getAll("end-hour");
 
+    const eventName = formData.get("event-name");
+    console.log(eventName);
+
     let orderDates = [];
 
     for (let i = 0; i < startDates.length; i++) {
@@ -176,6 +179,7 @@ const RoomBookingInfo = () => {
               <th className="reservationColumn">Order</th>
               <th className="dateColumn">Start</th>
               <th className="dateColumn">End</th>
+              <th className="dateColumn">Event</th>
             </tr>
           </thead>
           <tbody>
@@ -217,7 +221,7 @@ const RoomBookingInfo = () => {
                       <option value="23:00">23:00</option>
                     </select>
                   </td>
-                  <td className="endDate">
+                  <td>
                     <input
                       type="date"
                       className="EndDateInput"
@@ -250,6 +254,13 @@ const RoomBookingInfo = () => {
                       <option value="22:00">22:00</option>
                       <option value="23:00">23:00</option>
                     </select>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Event..."
+                      name="event-name"
+                    />
                     <span
                       onClick={handleDelete}
                       id={elem.id}

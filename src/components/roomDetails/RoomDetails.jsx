@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import Carousel from "../carousel/Carousel";
 import RoomDescription from "../roomDescription/RoomDescription";
 import RoomBookingInfo from "../roomBookingInfo/RoomBookingInfo";
-import BookingTable from "../bookingTable/BookingTable";
 
 const RoomDetails = () => {
   const { string } = useParams();
@@ -27,7 +26,6 @@ const RoomDetails = () => {
       </div>
       <div className="slider-line"></div>
       <RoomBookingInfo />
-      <BookingTable />
     </>
   );
 };

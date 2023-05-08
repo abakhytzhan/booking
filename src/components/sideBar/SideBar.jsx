@@ -14,7 +14,9 @@ export default function SideBar() {
         height: "100%",
         backgroundColor: "primary.dark",
         padding: 2,
+        paddingTop: 4,
         position: "fixed",
+        marginTop: 6.8,
       }}
     >
       <Typography color="white" textAlign="center">
