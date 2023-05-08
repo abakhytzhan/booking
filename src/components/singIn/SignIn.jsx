@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -45,11 +43,8 @@ export const login = async (username, password) => {
   }
 };
 
-export function setCurrentUser(loginName, password) {
-  localStorage.setItem(
-    "currentUser",
-    JSON.stringify({ loginName: loginName, password: password })
-  );
+export function setCurrentUser(username) {
+  localStorage.setItem("currentUser", JSON.stringify({ username: username }));
 }
 
 function Copyright(props) {
@@ -87,7 +82,7 @@ export default function SignIn() {
 
     login(username, password)
       .then((data) => {
-        setCurrentUser(username, password);
+        setCurrentUser(username);
         setToken(data.token);
         setLoading(false);
         navigate("/");

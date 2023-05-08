@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import { setCurrentUser } from "../singIn/SignIn";
+import { setToken } from "../singIn/SignIn";
 
 const pages = ["Rooms", "Calendar", "Contacts"];
 const settings = ["MyBookings", "MyProfile", "Logout"];
@@ -29,21 +31,40 @@ const Header = () => {
   };
 
   const handleCloseNavMenu = (event) => {
-    let route = event.target.id.toLowerCase();
-    if (route === "rooms") {
-      route = "";
+    let id = event.target.id.toLowerCase();
+    let route = event.target.innerHTML.toLowerCase();
+
+    if (id === "rooms" || route === "rooms") {
+      navigate("/");
+      setAnchorElNav(null);
+    } else if (id === "calendar" || route === "calendar") {
+      navigate("/calendar");
+      setAnchorElNav(null);
+    } else if (id === "contacts" || route === "contacts") {
+      navigate("/contacts");
+      setAnchorElNav(null);
+    } else {
+      setAnchorElNav(null);
     }
-    navigate(`/${route}`);
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = (event) => {
+    let id = event.target.id.toLowerCase();
     let route = event.target.innerHTML.toLowerCase();
-    if (route === "logout") {
+    if (id === "logout" || route === "logout") {
+      setCurrentUser("");
+      setToken("");
+
       navigate("/login");
       setAnchorElUser(null);
+    } else if (id === "myprofile" || route === "myprofile") {
+      navigate("/myprofile");
+      setAnchorElUser(null);
+    } else if (id === "mybookings" || route === "mybookings") {
+      navigate("/mybookings");
+      setAnchorElUser(null);
     } else {
-      navigate(`/${route}`);
       setAnchorElUser(null);
     }
   };
@@ -100,7 +121,7 @@ const Header = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={handleCloseNavMenu} id={page}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
