@@ -313,3 +313,30 @@
 .bookingError {
   margin-bottom: 20px;
 }
+
+.contactsInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 1000px;
+  height: 400px;
+}
+
+.address {
+  width: 35%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 32px;
+  padding-left: 50px;
+}
+
+.map {
+  width: 60%;
+  height: 100%;
+  border: 1px solid gray;
+}
