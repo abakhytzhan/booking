@@ -41,7 +41,7 @@ export default function SideBar() {
             <button
               className="roomButton"
               key={room}
-              onClick={() => navigate(`/room/${room}`)}
+              onClick={() => navigate(`/rooms/${room}`)}
             >
               {room}
             </button>

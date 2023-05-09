@@ -4,7 +4,7 @@ import Login from "./pages/login/login";
 import Registration from "./pages/registration/registration";
 import HomePage from "./pages/home/homePage";
 import PageNotFound from "./pages/pageNotFound/pageNotFound";
-import Room from "./pages/room/room";
+import Rooms from "./pages/rooms/rooms";
 import Contacts from "./pages/contacts/contacts";
 import Calendar from "./pages/calendar/calendar";
 import MyBookings from "./pages/myBookings/myBookings";
@@ -18,9 +18,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<Login />} />
         <Route path="registration" element={<Registration />} />
-        <Route path="room">
-          <Route index element={<Room />} />
-          <Route path=":string" element={<Room />} />
+        <Route path="rooms">
+          <Route index element={<Rooms />} />
+          <Route path=":string" element={<Rooms />} />
         </Route>
         <Route path="contacts" element={<Contacts />} />
         <Route path="calendar" element={<Calendar />} />

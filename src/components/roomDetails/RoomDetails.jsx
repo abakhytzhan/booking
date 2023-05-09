@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import Carousel from "../carousel/Carousel";
 import RoomDescription from "../roomDescription/RoomDescription";
 import RoomBookingInfo from "../roomBookingInfo/RoomBookingInfo";
+import { useState, useEffect } from "react";
 
-export const getAllRooms = async () => {
+export const getRoomByNumber = async (id) => {
   try {
-    let response = await fetch("http://localhost:8080/rooms");
+    let response = await fetch(`http://localhost:8080/rooms/${id}`);
 
     if (!response.ok) {
       console.log("error");
@@ -23,6 +24,16 @@ export const getAllRooms = async () => {
 
 const RoomDetails = () => {
   const { string } = useParams();
+  // const [room, setRoom] = useState([]);
+
+  // useEffect(() => {
+  //   getRoomByNumber(string)
+  //     .then((data) => {
+  //       setRoom(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [string]);
+
   return (
     <>
       <Typography

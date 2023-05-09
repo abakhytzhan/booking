@@ -1,7 +1,7 @@
 import RoomDetails from "../../components/roomDetails/RoomDetails";
 
-const Room = () => {
+const Rooms = () => {
   return <RoomDetails />;
 };
 
-export default Room;
+export default Rooms;

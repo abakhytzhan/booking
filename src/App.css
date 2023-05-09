@@ -220,7 +220,7 @@
 
 .reservationTable {
   line-height: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .reservationColumn,
@@ -300,4 +300,16 @@
   padding-left: 280px;
   margin: 0 auto;
   margin-top: 68px;
+}
+
+.hour {
+  margin-left: 20px;
+}
+
+.bookingErrorMessage {
+  color: red;
+}
+
+.bookingError {
+  margin-bottom: 20px;
 }

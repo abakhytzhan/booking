@@ -6,6 +6,21 @@ const RoomBookingInfo = () => {
   const { string } = useParams();
   const navigate = useNavigate();
 
+  const months = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+  ];
+
   const generateID = () => {
     return Math.random() * 100;
   };
@@ -98,22 +113,22 @@ const RoomBookingInfo = () => {
           orderDateParse[i].start > dataServer[j].start &&
           orderDateParse[i].start < dataServer[j].end
         ) {
-          message.push(`conflict: order ${i + 1} + reservation ${j + 1}`);
+          message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
         }
         if (
           orderDateParse[i].end > dataServer[j].start &&
           orderDateParse[i].end < dataServer[j].end
         ) {
-          message.push(`conflict: order ${i + 1} + reservation ${j + 1}`);
+          message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
         }
         if (
           orderDateParse[i].start <= dataServer[j].start &&
           orderDateParse[i].end >= dataServer[j].end
         ) {
-          message.push(`conflict: order ${i + 1} + reservation ${j + 1}`);
+          message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
         }
         if (date > orderDateParse[i].end) {
-          message.push(`invalid order date order ${i + 1}`);
+          message.push(`Invalid booking date: booking ${i + 1}`);
         }
       }
     }
@@ -148,16 +163,18 @@ const RoomBookingInfo = () => {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
-                  {elem.start.getDate()}/{elem.start.getMonth() + 1}/
-                  {elem.start.getFullYear()} {elem.start.getHours()}:00
+                  {elem.start.getDate()} {months[elem.start.getMonth()]}{" "}
+                  {elem.start.getFullYear()}{" "}
+                  <span className="hour">{elem.start.getHours()}:00</span>
                 </td>
                 <td>
-                  {elem.end.getDate()}/{elem.end.getMonth() + 1}/
-                  {elem.end.getFullYear()} {elem.end.getHours()}:00
+                  {elem.end.getDate()} {months[elem.end.getMonth()]}{" "}
+                  {elem.end.getFullYear()}{" "}
+                  <span className="hour">{elem.end.getHours()}:00</span>
                 </td>
                 <td>{elem.eventName}</td>
                 <td>
-                  {elem.event === "Frontend" ? (
+                  {elem.eventName === "Frontend" ? (
                     <button
                       className="deleteReservationButton"
                       onClick={deleteBooking}
@@ -176,7 +193,7 @@ const RoomBookingInfo = () => {
         <table className="reservationTable">
           <thead>
             <tr>
-              <th className="reservationColumn">Order</th>
+              <th className="reservationColumn">Booking</th>
               <th className="dateColumn">Start</th>
               <th className="dateColumn">End</th>
               <th className="dateColumn">Event</th>
@@ -284,9 +301,15 @@ const RoomBookingInfo = () => {
             })}
           </tbody>
         </table>
-        {!errorMessage
-          ? null
-          : errorMessage.map((elem) => <div key={elem}>{elem}</div>)}
+        <div className="bookingError">
+          {!errorMessage
+            ? null
+            : errorMessage.map((elem) => (
+                <div key={elem} className="bookingErrorMessage">
+                  {elem}
+                </div>
+              ))}
+        </div>
 
         <div className="buttons">
           <button className="orderButton" type="submit">

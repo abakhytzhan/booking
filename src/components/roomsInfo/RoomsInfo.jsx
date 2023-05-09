@@ -9,28 +9,28 @@ import roomImage from "./photo1664884357_1.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-export const getAllRooms = async () => {
-  try {
-    let response = await fetch("http://localhost:8080/rooms");
+// export const getAllRooms = async () => {
+//   try {
+//     let response = await fetch("http://localhost:8080/rooms");
 
-    if (!response.ok) {
-      console.log("error");
-      throw new Error();
-    } else {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.log(err);
-    throw new Error();
-  }
-};
+//     if (!response.ok) {
+//       console.log("error");
+//       throw new Error();
+//     } else {
+//       const result = await response.json();
+//       return result;
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     throw new Error();
+//   }
+// };
 
 const roomsDetails = [
   {
     name: "203",
     description:
-      "Учебная аудитория, включающая 61 персональных компьютеров на ОС Ubuntu, 20 компьютеров на Apple iMac М1, проекторы",
+      "Учебная аудитория, включающая 61 персональных компьютеров на ОС Ubuntu, 20 компьютеров на Apple iMac М1, проекторы, Учебная аудитория, включающая 61 персональных компьютеров на ОС Ubuntu, 20 компьютеров на Apple iMac М1, проекторы, Учебная аудитория, включающая 61 персональных компьютеров на ОС Ubuntu, 20 компьютеров на Apple iMac М1, проекторы",
     image: roomImage,
   },
   {
@@ -71,17 +71,17 @@ const roomsDetails = [
   },
 ];
 
-const Rooms = () => {
+const RoomsInfo = () => {
   const navigate = useNavigate();
-  const [rooms, setRooms] = React.useState([]);
+  // const [rooms, setRooms] = React.useState([]);
 
-  useEffect(() => {
-    getAllRooms()
-      .then((data) => {
-        setRooms(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   getAllRooms()
+  //     .then((data) => {
+  //       setRooms(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <div className="cards">
@@ -101,14 +101,14 @@ const Rooms = () => {
                 ROOM {room.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {room.description}
+                {room.description.slice(0, 120) + "..."}
               </Typography>
             </CardContent>
             <CardActions>
               <Button size="small">Share</Button>
               <Button
                 size="small"
-                onClick={() => navigate(`/room/${room.name}`)}
+                onClick={() => navigate(`/rooms/${room.name}`)}
               >
                 Learn More
               </Button>
@@ -120,4 +120,4 @@ const Rooms = () => {
   );
 };
 
-export default Rooms;
+export default RoomsInfo;

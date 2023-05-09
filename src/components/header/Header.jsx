@@ -158,6 +158,34 @@ const Header = () => {
               </Button>
             ))}
           </Box>
+          <Button
+            href="/login"
+            sx={{
+              my: 2,
+              color: "white",
+              display: "block",
+              border: "1px solid #fff",
+              borderRadius: 2,
+              marginRight: 2,
+              fontSize: 12,
+            }}
+          >
+            Sign In
+          </Button>
+          <Button
+            href="/registration"
+            sx={{
+              my: 2,
+              color: "white",
+              display: "block",
+              border: "1px solid #fff",
+              borderRadius: 2,
+              marginRight: 2,
+              fontSize: 12,
+            }}
+          >
+            Sign Up
+          </Button>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
