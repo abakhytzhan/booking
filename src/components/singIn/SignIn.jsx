@@ -12,36 +12,15 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import spinner from "./spinner.svg";
+import { login } from "../../service/login";
 
 export function setToken(token) {
   localStorage.setItem("currentToken", JSON.stringify(token));
 }
 
-export const login = async (username, password) => {
-  try {
-    let response = await fetch("http://localhost:8080/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
-
-    if (!response.ok) {
-      console.log("error");
-      throw new Error("Invalid username or password");
-    } else {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.log(err);
-    throw new Error();
-  }
-};
+export function setUserID(userID) {
+  localStorage.setItem("currentUserID", JSON.stringify(userID));
+}
 
 export function setCurrentUser(username) {
   localStorage.setItem("currentUser", JSON.stringify({ username: username }));
@@ -84,6 +63,7 @@ export default function SignIn() {
       .then((data) => {
         setCurrentUser(username);
         setToken(data.token);
+        setUserID(data.userID);
         setLoading(false);
         navigate("/");
       })

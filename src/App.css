@@ -104,7 +104,7 @@
 
 .image {
   width: 100%;
-  height: 400px;
+  height: 440px;
   border-radius: 30px;
 }
 
@@ -169,7 +169,6 @@
 }
 .dot.active {
   background: #ff5001;
-  width: 40px;
 }
 
 .slider-line {
@@ -188,16 +187,21 @@
 
 .roomDescription {
   width: 40%;
-  height: 400px;
+  height: 440px;
   background-color: #f2f2f2;
   border-radius: 30px;
-  padding: 30px;
+  padding: 15px;
   box-sizing: border-box;
+  font-size: 16px;
+}
+
+.roomDescription td {
+  vertical-align: top;
 }
 
 .firstColumn {
-  height: 40px;
-  width: 100px;
+  height: 30px;
+  width: 120px;
 }
 
 .container {
@@ -338,5 +342,23 @@
 .map {
   width: 60%;
   height: 100%;
-  border: 1px solid gray;
+}
+
+.myProfileTable td {
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  color: #7c5dfa;
+  font-weight: bold;
+}
+
+.homeButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: #1565c0;
+  border-radius: 5px;
+  color: #fff;
 }

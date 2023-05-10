@@ -1,20 +1,23 @@
-import mountains from "./img/mountains.png";
-import care from "./img/care-client-safe.png";
-import atmosphere from "./img/atmosphere.png";
-import publicIcon from "./img/public-icon.png";
-import { useState } from "react";
 import arrowLeft from "./img/arrowLeftLight.svg";
 import arrowRight from "./img/arrowRightLight.svg";
-import phone from "./img/phone.png";
+import { useState } from "react";
 
-const Carousel = () => {
+const Carousel = ({ room }) => {
   const [slideIndex, setSlideIndex] = useState(1);
-  const dataSlider = [atmosphere, care, phone, mountains, publicIcon];
+  let dataSlider = room.images?.map((image) => image?.url);
+
+  if (dataSlider.length === 0) {
+    dataSlider = [
+      "https://thumb.tildacdn.com/tild3366-3662-4761-b836-356639346166/-/format/webp/photo1664884357_8.jpeg",
+      "https://thumb.tildacdn.com/tild3666-3939-4339-a332-333163343733/-/format/webp/photo1664884357_6.jpeg",
+      "https://thumb.tildacdn.com/tild3864-6465-4665-a136-613930663335/-/format/webp/photo1664884357_5.jpeg",
+    ];
+  }
 
   const nextSlide = () => {
-    if (slideIndex !== dataSlider.length) {
+    if (slideIndex !== dataSlider?.length) {
       setSlideIndex((slideIndex) => slideIndex + 1);
-    } else if (slideIndex === dataSlider.length) {
+    } else if (slideIndex === dataSlider?.length) {
       setSlideIndex(() => 1);
     }
   };
@@ -23,7 +26,7 @@ const Carousel = () => {
     if (slideIndex !== 1) {
       setSlideIndex((slideIndex) => slideIndex - 1);
     } else if (slideIndex === 1) {
-      setSlideIndex(() => dataSlider.length);
+      setSlideIndex(() => dataSlider?.length);
     }
   };
 
@@ -48,7 +51,7 @@ const Carousel = () => {
           alt="arrowRight"
         ></img>
         <div className="container-dots">
-          {Array.from({ length: 5 }).map((item, index) => (
+          {Array.from({ length: dataSlider?.length }).map((item, index) => (
             <div
               onClick={() => moveDot(index + 1)}
               key={index}

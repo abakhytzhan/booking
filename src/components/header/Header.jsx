@@ -22,6 +22,9 @@ const Header = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const letter = JSON.parse(
+    localStorage.getItem("currentUser")
+  ).username.charAt(0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,6 +58,7 @@ const Header = () => {
     if (id === "logout" || route === "logout") {
       setCurrentUser("");
       setToken("");
+      localStorage.setItem("currentUserID", JSON.stringify(""));
 
       navigate("/login");
       setAnchorElUser(null);
@@ -190,7 +194,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="avatar" src="" />
+                <Avatar alt={letter} src="image" />
               </IconButton>
             </Tooltip>
             <Menu

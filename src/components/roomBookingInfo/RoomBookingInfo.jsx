@@ -1,25 +1,63 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import spinner from "./spinner.svg";
+import { getAllReservationsByRoomNumber } from "../../service/getAllReservationsByRoomNumber";
+import { addReservationByRoomNumber } from "../../service/addReservationByRoomNumber";
+import { deleteReservation } from "../../service/deleteReservation";
+
+const months = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
 
 const RoomBookingInfo = () => {
   const { string } = useParams();
-  const navigate = useNavigate();
+  const [timeslots, setTimeslot] = useState();
+  const [loading, setLoading] = useState(false);
 
-  const months = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
-  ];
+  useEffect(() => {
+    getAllReservationsByRoomNumber(string)
+      .then((bookings) => {
+        let timeslotData = [];
+        bookings.map((booking) => {
+          booking.timeslots.map((timeslot) => {
+            let timeslot2 = {
+              start: timeslot.start,
+              end: timeslot.end,
+              purpose: timeslot.purpose,
+              roomNumber: booking.roomNumber,
+              userID: timeslot.userID,
+              timeslotID: timeslot.timeslotID,
+            };
+            timeslotData.push(timeslot2);
+          });
+        });
+
+        const dataReservation = timeslotData.map((elem) => {
+          return {
+            start: new Date(elem.start),
+            end: new Date(elem.end),
+            purpose: elem.purpose,
+            roomNumber: elem.roomNumber,
+            userID: elem.userID,
+            timeslotID: elem.timeslotID,
+          };
+        });
+
+        setTimeslot(dataReservation);
+      })
+      .catch((err) => console.log(err));
+  }, [string]);
 
   const generateID = () => {
     return Math.random() * 100;
@@ -36,20 +74,6 @@ const RoomBookingInfo = () => {
       id: generateID().toFixed(2),
     },
   ]);
-
-  const dataServer = [
-    { start: 1683169200000, end: 1683180000000, eventName: "Frontend" },
-    { start: 1683259200000, end: 1683266400000, eventName: "Backend" },
-    { start: 1683363600000, end: 1683367200000, eventName: "Android" },
-  ];
-
-  const dataReservation = dataServer.map((elem) => {
-    return {
-      start: new Date(elem.start),
-      end: new Date(elem.end),
-      eventName: elem.eventName,
-    };
-  });
 
   const handleAddNewOrder = () => {
     setOrderData((orderData) => [
@@ -72,81 +96,105 @@ const RoomBookingInfo = () => {
     );
   };
 
-  const handleSubmit = useCallback(async (event) => {
-    event.preventDefault();
-    const { currentTarget } = event;
-    const formData = new FormData(currentTarget);
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      const { currentTarget } = event;
+      const formData = new FormData(currentTarget);
 
-    const startDates = formData.getAll("start-date");
-    const startHour = formData.getAll("start-hour");
+      const startDates = formData.getAll("start-date");
+      const startHour = formData.getAll("start-hour");
 
-    const endDates = formData.getAll("end-date");
-    const endHour = formData.getAll("end-hour");
+      const endDates = formData.getAll("end-date");
+      const endHour = formData.getAll("end-hour");
 
-    const eventName = formData.get("event-name");
-    console.log(eventName);
+      const purpose = formData.getAll("purpose");
 
-    let orderDates = [];
+      let orderDates = [];
 
-    for (let i = 0; i < startDates.length; i++) {
-      orderDates[i] = {
-        startDay: startDates[i],
-        startHour: startHour[i],
-        endDay: endDates[i],
-        endHour: endHour[i],
-      };
-    }
+      for (let i = 0; i < startDates.length; i++) {
+        orderDates[i] = {
+          startDay: startDates[i],
+          startHour: startHour[i],
+          endDay: endDates[i],
+          endHour: endHour[i],
+          purpose: purpose[i],
+        };
+      }
 
-    const orderDateParse = orderDates.map((elem) => {
-      return {
-        start: Date.parse(`${elem.startDay} ${elem.startHour}`),
-        end: Date.parse(`${elem.endDay} ${elem.endHour}`),
-      };
-    });
+      const orderDateParse = orderDates.map((elem) => {
+        return {
+          start: Date.parse(`${elem.startDay} ${elem.startHour}`),
+          end: Date.parse(`${elem.endDay} ${elem.endHour}`),
+          purpose: elem.purpose,
+        };
+      });
 
-    let message = [];
-    const date = Date.now();
+      let message = [];
+      const date = Date.now();
 
-    for (let i = 0; i < orderDateParse.length; i++) {
-      for (let j = 0; j < dataServer.length; j++) {
-        if (
-          orderDateParse[i].start > dataServer[j].start &&
-          orderDateParse[i].start < dataServer[j].end
-        ) {
-          message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
-        }
-        if (
-          orderDateParse[i].end > dataServer[j].start &&
-          orderDateParse[i].end < dataServer[j].end
-        ) {
-          message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
-        }
-        if (
-          orderDateParse[i].start <= dataServer[j].start &&
-          orderDateParse[i].end >= dataServer[j].end
-        ) {
-          message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
-        }
-        if (date > orderDateParse[i].end) {
-          message.push(`Invalid booking date: booking ${i + 1}`);
+      for (let i = 0; i < orderDateParse.length; i++) {
+        for (let j = 0; j < timeslots?.length; j++) {
+          if (
+            orderDateParse[i].start > timeslots[j].start &&
+            orderDateParse[i].start < timeslots[j].end
+          ) {
+            message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
+          }
+          if (
+            orderDateParse[i].end > timeslots[j].start &&
+            orderDateParse[i].end < timeslots[j].end
+          ) {
+            message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
+          }
+          if (
+            orderDateParse[i].start <= timeslots[j].start &&
+            orderDateParse[i].end >= timeslots[j].end
+          ) {
+            message.push(`Conflict: booking ${i + 1} - reservation ${j + 1}`);
+          }
+          if (date > orderDateParse[i].end) {
+            message.push(`Invalid booking date: booking ${i + 1}`);
+          }
         }
       }
-    }
 
-    if (message.length === 0) {
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    }
-    setErrorMessage([...new Set(message)]);
-  }, []);
+      if (message.length === 0) {
+        setLoading(true);
+        addReservationByRoomNumber(string, orderDateParse)
+          .then(() => {
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+          })
+          .finally(() => window.location.reload());
+      }
+      setErrorMessage([...new Set(message)]);
+    },
+    [string, timeslots]
+  );
 
-  const deleteBooking = () => {};
+  const deleteBooking = (event) => {
+    const id = event.target.id;
+    setLoading(true);
+
+    deleteReservation(string, id)
+      .then((data) => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      })
+      .finally(() => window.location.reload());
+  };
 
   return (
     <div className="container">
       <header>
-        <div className="header-title">Room {string} information</div>
+        <h2 className="header-title">Room {string} information</h2>
       </header>
       <table className="reservationTable">
         <thead>
@@ -158,7 +206,7 @@ const RoomBookingInfo = () => {
           </tr>
         </thead>
         <tbody>
-          {dataReservation.map((elem, index) => {
+          {timeslots?.map((elem, index) => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
@@ -172,10 +220,13 @@ const RoomBookingInfo = () => {
                   {elem.end.getFullYear()}{" "}
                   <span className="hour">{elem.end.getHours()}:00</span>
                 </td>
-                <td>{elem.eventName}</td>
+                <td>{elem.purpose}</td>
                 <td>
-                  {elem.eventName === "Frontend" ? (
+                  {elem?.userID ===
+                    JSON.parse(localStorage.getItem("currentUserID")) ||
+                  JSON.parse(localStorage.getItem("currentUserID")) === 0 ? (
                     <button
+                      id={elem.timeslotID}
                       className="deleteReservationButton"
                       onClick={deleteBooking}
                     >
@@ -189,7 +240,7 @@ const RoomBookingInfo = () => {
         </tbody>
       </table>
       <form onSubmit={handleSubmit} className="orderForm">
-        <h2>Booking a Room</h2>
+        <h2 className="header-title">Booking a Room</h2>
         <table className="reservationTable">
           <thead>
             <tr>
@@ -273,11 +324,7 @@ const RoomBookingInfo = () => {
                     </select>
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      placeholder="Event..."
-                      name="event-name"
-                    />
+                    <input type="text" placeholder="Event..." name="purpose" />
                     <span
                       onClick={handleDelete}
                       id={elem.id}
@@ -324,6 +371,11 @@ const RoomBookingInfo = () => {
           </button>
         </div>
       </form>
+      {loading ? (
+        <div className="spinner">
+          <img src={spinner} alt="download" />
+        </div>
+      ) : null}
     </div>
   );
 };

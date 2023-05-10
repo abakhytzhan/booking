@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -14,31 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import spinner from "./spinner.svg";
-
-export const register = async (email, username, password) => {
-  try {
-    let response = await fetch("http://localhost:8080/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password,
-      }),
-    });
-
-    if (!response.ok) {
-      console.log("error");
-    } else {
-      return response;
-    }
-  } catch (err) {
-    console.log(err);
-    return Promise.reject();
-  }
-};
+import { register } from "../../service/register";
 
 function Copyright(props) {
   return (

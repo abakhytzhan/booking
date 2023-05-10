@@ -1,39 +1,9 @@
 import { Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
 import Carousel from "../carousel/Carousel";
 import RoomDescription from "../roomDescription/RoomDescription";
 import RoomBookingInfo from "../roomBookingInfo/RoomBookingInfo";
-import { useState, useEffect } from "react";
 
-export const getRoomByNumber = async (id) => {
-  try {
-    let response = await fetch(`http://localhost:8080/rooms/${id}`);
-
-    if (!response.ok) {
-      console.log("error");
-      throw new Error();
-    } else {
-      const result = await response.json();
-      return result;
-    }
-  } catch (err) {
-    console.log(err);
-    throw new Error();
-  }
-};
-
-const RoomDetails = () => {
-  const { string } = useParams();
-  // const [room, setRoom] = useState([]);
-
-  // useEffect(() => {
-  //   getRoomByNumber(string)
-  //     .then((data) => {
-  //       setRoom(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [string]);
-
+const RoomDetails = ({ room }) => {
   return (
     <>
       <Typography
@@ -46,11 +16,14 @@ const RoomDetails = () => {
           textAlign: "center",
         }}
       >
-        {string} ROOM DETAILS
+        {room?.roomNumber} ROOM DETAILS
       </Typography>
+      <a className="homeButton" href="/">
+        Home
+      </a>
       <div className="roomDetailsFlex">
-        <Carousel />
-        <RoomDescription />
+        <Carousel room={room} />
+        <RoomDescription room={room} />
       </div>
       <div className="slider-line"></div>
       <RoomBookingInfo />

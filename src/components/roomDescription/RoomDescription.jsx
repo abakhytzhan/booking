@@ -1,31 +1,31 @@
-const RoomDescription = () => {
+const RoomDescription = ({ room }) => {
   return (
     <section className="roomDescription">
       <table>
         <tbody>
-          <tr className="tableRow">
-            <td className="firstColumn">Block:</td>
-            <td>C3.2</td>
-          </tr>
           <tr>
             <td className="firstColumn">Floor:</td>
-            <td>2</td>
+            <td>{room.floor}</td>
           </tr>
           <tr>
             <td className="firstColumn">Area:</td>
-            <td>250</td>
+            <td>{room.area}</td>
           </tr>
           <tr>
             <td className="firstColumn">Capacity:</td>
-            <td>150</td>
+            <td>{room.capacity}</td>
           </tr>
           <tr>
-            <td className="firstColumn">Amenities:</td>
-            <td>Air Condition</td>
+            <td className="firstColumn">Facilities:</td>
+            <td>
+              {room.facilities.map((elem) => (
+                <span key={elem.name}>{elem.name} </span>
+              ))}
+            </td>
           </tr>
           <tr>
-            <td className="firstColumn">Location:</td>
-            <td>Astana</td>
+            <td className="firstColumn">Description:</td>
+            <td>{room.description}</td>
           </tr>
         </tbody>
       </table>
