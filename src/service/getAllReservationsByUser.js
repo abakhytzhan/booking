@@ -1,13 +1,16 @@
 export const getAllReservationsByUser = async () => {
   let token = JSON.parse(localStorage.getItem("currentToken"));
   try {
-    let response = await fetch("http://localhost:8080/reservation/my", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_API_URL}/reservation/my`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log("error");

@@ -4,7 +4,7 @@ export const deleteReservation = async (id, timeslotID) => {
   console.log(timeslotID);
   try {
     let response = await fetch(
-      `http://localhost:8080/reservation/${id}/${timeslotID}`,
+      `${process.env.REACT_APP_API_URL}/reservation/${id}/${timeslotID}`,
       {
         method: "DELETE",
         headers: {

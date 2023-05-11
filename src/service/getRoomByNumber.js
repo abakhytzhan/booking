@@ -1,7 +1,7 @@
 export const getRoomByNumber = async (id) => {
   let token = JSON.parse(localStorage.getItem("currentToken"));
   try {
-    let response = await fetch(`http://localhost:8080/room/${id}`, {
+    let response = await fetch(`${process.env.REACT_APP_API_URL}/room/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

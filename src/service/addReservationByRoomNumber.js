@@ -3,16 +3,19 @@ export const addReservationByRoomNumber = async (id, timeslots) => {
   console.log(timeslots);
 
   try {
-    let response = await fetch(`http://localhost:8080/reservation/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({
-        timeslots: timeslots,
-      }),
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_API_URL}/reservation/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          timeslots: timeslots,
+        }),
+      }
+    );
 
     if (!response.ok) {
       console.log("error");

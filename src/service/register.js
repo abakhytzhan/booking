@@ -1,6 +1,6 @@
 export const register = async (email, username, password) => {
   try {
-    let response = await fetch("http://localhost:8080/register", {
+    let response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

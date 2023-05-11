@@ -29,7 +29,7 @@ const MyBookingsInfo = () => {
             let timeslot2 = {
               start: timeslot.start,
               end: timeslot.end,
-              purpose: booking.purpose,
+              purpose: timeslot.purpose,
               roomNumber: booking.roomNumber,
             };
             timeslotData.push(timeslot2);
