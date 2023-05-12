@@ -162,68 +162,74 @@ const Header = () => {
               </Button>
             ))}
           </Box>
-          <Button
-            href="/login"
-            sx={{
-              my: 2,
-              color: "white",
-              display: "block",
-              border: "1px solid #fff",
-              borderRadius: 2,
-              marginRight: 2,
-              fontSize: 12,
-            }}
-          >
-            Sign In
-          </Button>
-          <Button
-            href="/registration"
-            sx={{
-              my: 2,
-              color: "white",
-              display: "block",
-              border: "1px solid #fff",
-              borderRadius: 2,
-              marginRight: 2,
-              fontSize: 12,
-            }}
-          >
-            Sign Up
-          </Button>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={letter} src="image" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+          {!JSON.parse(localStorage.getItem("currentToken")) ? (
+            <Button
+              href="/login"
+              sx={{
+                my: 2,
+                color: "white",
+                display: "block",
+                border: "1px solid #fff",
+                borderRadius: 2,
+                marginRight: 2,
+                fontSize: 12,
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={handleCloseUserMenu}
-                  id={setting}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              Sign In
+            </Button>
+          ) : null}
+          {!JSON.parse(localStorage.getItem("currentToken")) ? (
+            <Button
+              href="/registration"
+              sx={{
+                my: 2,
+                color: "white",
+                display: "block",
+                border: "1px solid #fff",
+                borderRadius: 2,
+                marginRight: 2,
+                fontSize: 12,
+              }}
+            >
+              Sign Up
+            </Button>
+          ) : null}
+
+          {!JSON.parse(localStorage.getItem("currentToken")) ? null : (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={letter} src="image" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={handleCloseUserMenu}
+                    id={setting}
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
