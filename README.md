@@ -1,3 +1,36 @@
+# Jusan Singularity Room Booking System
+
+## Hackathon (Jusan Singularity)
+
+# Screenshots
+
+<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px">
+<img
+  src="./public/image1.png"
+  alt="image1"
+  style="max-width: 400px">
+  <img
+  src="./public/image2.png"
+  alt="image2"
+  style="max-width: 400px">
+<img
+  src="./public/image3.png"
+  alt="image3"
+  style="max-width: 400px">
+  <img
+  src="./public/image4.png"
+  alt="image4"
+  style="max-width: 400px">
+<img
+  src="./public/image5.png"
+  alt="image5"
+  style="max-width: 400px">
+  <img
+  src="./public/image6.png"
+  alt="image6"
+  style="max-width: 400px">
+  </div>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
